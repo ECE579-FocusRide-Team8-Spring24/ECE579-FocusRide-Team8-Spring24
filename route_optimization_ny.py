@@ -4,7 +4,10 @@ import matplotlib.pyplot as plt
 import math
 
 def plot_route(G, origin_node, destination_node, route):
-    """Function to plot the route on a map with highlighted start and end points."""
+    """
+    Function to plot the route on a map with highlighted start and end points.
+    
+    """
     # Color the nodes
     node_colors = ['#FFFFFF' for node in G.nodes()]
     node_sizes = [15 if node not in [origin_node, destination_node] else 100 for node in G.nodes()]
@@ -30,18 +33,21 @@ def plot_route(G, origin_node, destination_node, route):
 
 def main():
     
-    
     route_optimisation("Empire State Building, New York", "Intrepid Museum, New York")
 
 def route_optimisation(start_location_text, end_location_text):
+    '''
+        Arguments:
+        start_location_text: string:  "Starting point for route"
+        end_location_text: string:  "Ending point for route"
 
+        This function uses osmnx and networkx library to get the shortest route between 2 points.
+    '''
     
     # Geocode locations
     start_point = ox.geocode(start_location_text)
     end_point = ox.geocode(end_location_text)
 
-    #print(start_point)
-    #print(end_point)
 
     rounded_start_point = (round(start_point[0], 4), round(start_point[1], 4))
     print("Rounded coordinates:", rounded_start_point)
@@ -49,6 +55,7 @@ def route_optimisation(start_location_text, end_location_text):
     rounded_end_point = (round(end_point[0], 4), round(end_point[1], 4))
     print("Rounded coordinates:", rounded_end_point)
     
+    #Get the haversine distance to approximate the size of the map 
     dist=haversine_distance(rounded_start_point,rounded_end_point)
     print("distance- "+str(dist))
     dist=(dist/2)+500
@@ -64,7 +71,7 @@ def route_optimisation(start_location_text, end_location_text):
     destination_node = ox.distance.nearest_nodes(G, X=rounded_end_point[1], Y=rounded_end_point[0])
 
 
-    # Find the shortest path using Djiktra's Algorithm
+    # Find the shortest path using Dijkstra's Algorithm
     try:
         route = nx.shortest_path(G, origin_node, destination_node, weight='length')
     except nx.NetworkXNoPath:
@@ -83,6 +90,9 @@ def route_optimisation(start_location_text, end_location_text):
 
 # Calculate distance to plot the map according to the distance between start and end points    
 def haversine_distance(coord1, coord2):
+    '''
+    Calculates the distance between 2 points based on coordinates
+    '''
     # Radius of Earth in kilometers
     R = 6371.0
 
@@ -100,5 +110,4 @@ def haversine_distance(coord1, coord2):
 
 if __name__ == "__main__":
     main()
-    #dist=haversine_distance((40.7484, -73.9857),(40.6893, -74.0445))
-    #print("distance- "+str(dist))
+    
