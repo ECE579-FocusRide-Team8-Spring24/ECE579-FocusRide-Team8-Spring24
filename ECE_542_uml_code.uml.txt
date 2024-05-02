@@ -1,0 +1,94 @@
+@startuml
+
+class DriverSystem {
+    - driverFocusMonitor: FocusMonitor
+    - routeAdjustment: RouteAdjustment
+    - accessibility: Accessibility
+    - reliabilitySecurity: ReliabilitySecurity
+    + monitorDriverFocus()
+    + adjustRoute()
+    + ensureAccessibility()
+    + ensureReliabilitySecurity()
+}
+
+class FocusMonitor {
+    - cameras: Camera[]
+    - infraredSensors: InfraredSensor[]
+    + detectDriverDistraction()
+    + detectDriverFatigue()
+}
+
+class RouteAdjustment {
+    - gps: GPS
+    - trafficData: TrafficData
+    + dynamicRouteAdjustment()
+    + prioritizeRoutes()
+}
+
+class Accessibility {
+    - visualDesign: VisualDesign
+    - voiceCommands: VoiceCommands
+    - adjustableAlerts: AdjustableAlerts
+    + provideVisualAccessibility()
+    + provideVoiceAccessibility()
+    + customizeAlerts()
+}
+
+class ReliabilitySecurity {
+    - encryption: Encryption
+    + ensureDataSecurity()
+    + ensureSystemReliability()
+}
+
+class Camera {
+    - resolution: int
+    + captureImage(): Image
+}
+
+class InfraredSensor {
+    - detectInfrared(): InfraredData
+}
+
+class GPS {
+    - currentLocation: Location
+    + updateLocation(): Location
+}
+
+class TrafficData {
+    - trafficDensity: int
+    + updateTrafficData(): TrafficData
+}
+
+class VisualDesign {
+    - highContrast: boolean
+    - largeFonts: boolean
+}
+
+class VoiceCommands {
+    - comprehensive: boolean
+}
+
+class AdjustableAlerts {
+    - alertTypes: String[]
+    + customizeAlerts()
+}
+
+class Encryption {
+    - method: String
+    + applyEncryption()
+}
+
+DriverSystem -down-|> FocusMonitor
+DriverSystem -down-|> RouteAdjustment
+DriverSystem -down-|> Accessibility
+DriverSystem -down-|> ReliabilitySecurity
+FocusMonitor "1" -- "n" Camera
+FocusMonitor "1" -- "n" InfraredSensor
+RouteAdjustment "1" -- "1" GPS
+RouteAdjustment "1" -- "1" TrafficData
+Accessibility "1" -- "1" VisualDesign
+Accessibility "1" -- "1" VoiceCommands
+Accessibility "1" -- "1" AdjustableAlerts
+ReliabilitySecurity "1" -- "1" Encryption
+
+@enduml
